@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct SimpleEditorApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            
+            HomeView(
+                store: Store(initialState: HomeFeature.State()) {
+                    HomeFeature()
+                }
+            )
         }
     }
 }
