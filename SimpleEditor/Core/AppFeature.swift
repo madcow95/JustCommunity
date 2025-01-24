@@ -3,6 +3,7 @@ import ComposableArchitecture
 
 @Reducer
 struct AppFeature {
+    
     @ObservableState
     struct AppState: Equatable {
         var count: Int = 0
@@ -21,4 +22,10 @@ struct AppFeature {
             }
         }
     }
+}
+
+@Reducer(state: .equatable)
+enum DestinationCase {
+    case setting
+    case photoPicker
 }

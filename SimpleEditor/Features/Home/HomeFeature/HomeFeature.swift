@@ -5,22 +5,22 @@ import ComposableArchitecture
 struct HomeFeature {
     @ObservableState
     struct HomeState {
-        var number: Int = 0
+        var destination: DestinationCase?
     }
     
     enum HomeAction {
-        case addNumber
-        case minusNumber
+        case moveToSetting(DestinationCase)
+        case clearDestination
     }
     
     var body: some Reducer<HomeState, HomeAction> {
         Reduce { state, action in
             switch action {
-            case .addNumber:
-                state.number += 1
+            case .moveToSetting(let destination):
+                state.destination = destination
                 return .none
-            case .minusNumber:
-                state.number -= 1
+            case .clearDestination:
+                state.destination = nil
                 return .none
             }
         }
