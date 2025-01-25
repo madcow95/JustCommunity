@@ -1,12 +1,12 @@
 import SwiftUI
+import ComposableArchitecture
 
 struct SettingView: View {
+    @Bindable var store: StoreOf<SettingFeature>
+    
     var body: some View {
-        NavigationStack {
-            VStack {
-                Text("Test")
-            }
+        VStack {
+            Text("Setting View")
         }
-        .background(Color.primaryBackgroundColor)
     }
 }

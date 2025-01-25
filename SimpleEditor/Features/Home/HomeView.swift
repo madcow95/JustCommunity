@@ -2,10 +2,10 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeView: View {
-    let store: StoreOf<HomeFeature>
+    @Bindable var store: StoreOf<HomeFeature>
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             VStack {
                 Text("store Number: hello world")
             }
@@ -13,15 +13,19 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
                         Spacer()
-                        CustomButton(image: "gearshape.fill", color: .primaryColor) {
-                            store.send(.moveToSetting(.setting))
+                        CustomButton(image: "gearshape.fill",
+                                     color: .primaryColor) {
+                            store.send(.moveToSetting)
                         }
-                        CustomButton(image: "plus", color: .primaryColor) {
+                        CustomButton(image: "plus",
+                                     color: .primaryColor) {
                             
                         }
                     }
                 }
             }
+        } destination: { store in
+            SettingView(store: store)
         }
         .background(Color.primaryBackgroundColor)
     }
