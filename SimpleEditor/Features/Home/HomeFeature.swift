@@ -11,6 +11,7 @@ struct HomeFeature {
     enum Action {
         case path(StackAction<SettingFeature.State, SettingFeature.Action>)
         case moveToSetting
+        case presentGallery
     }
     
     var body: some ReducerOf<Self> {
@@ -20,6 +21,9 @@ struct HomeFeature {
                 return .none
             case .moveToSetting:
                 state.path.append(SettingFeature.State())
+                return .none
+            case .presentGallery:
+                
                 return .none
             }
         }
