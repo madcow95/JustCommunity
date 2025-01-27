@@ -55,11 +55,16 @@ struct HomeView: View {
                                 }
                                 CustomButton(image: "plus",
                                              color: Color.white) {
-                                    
+                                    store.send(.showGallery)
                                 }
                             }
                         }
                     }
+                }
+                .sheet(
+                    isPresented: $store.isGalleryPresented
+                ) {
+                    VideoPicker(videoURL: nil)
                 }
             } destination: { store in
                 SettingView(store: store)
