@@ -7,43 +7,9 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-                ScrollView(.vertical) {
+                ScrollView {
                     VStack {
-                        VStack {
-                            Image("")
-                                .resizable()
-                                .frame(width: geometry.size.width - 100, height: geometry.size.height - 300)
-                                .scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: 25))
-                                .padding()
-                        }
-                        
-                        VStack {
-                            HStack {
-                                CustomButton(image: "arrow.uturn.left",
-                                             color: Color.white) {
-                                    print("turn left")
-                                }
-                                             .disabled(true)
-                                CustomButton(image: "arrow.uturn.right",
-                                             color: Color.white) {
-                                    print("right turn")
-                                }
-                                             .disabled(true)
-                                Spacer()
-                                CustomButton(image: "play.fill",
-                                             color: Color.white) {
-                                    print("play")
-                                }
-                                             .disabled(true)
-                                Spacer()
-                                CustomButton(image: "arrow.down.left.and.arrow.up.right.square",
-                                             color: Color.white) {
-                                    print("full screen")
-                                }
-                            }
-                        }
-                        .frame(width: geometry.size.width, height: 80)
+                        Text("TEST")
                     }
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
@@ -55,19 +21,24 @@ struct HomeView: View {
                                 }
                                 CustomButton(image: "plus",
                                              color: Color.white) {
-                                    store.send(.showGallery)
+                                    store.send(.moveToAdd)
                                 }
                             }
                         }
                     }
                 }
-                .sheet(
-                    isPresented: $store.isGalleryPresented
-                ) {
-                    VideoPicker(videoURL: nil)
+                .sheet(item: $store.scope(state: \.photoFeature, action: \.photoFeature)) { photoStore in
+                    NavigationStack {
+                        VideoPickerView(store: photoStore)
+                    }
                 }
             } destination: { store in
-                SettingView(store: store)
+                switch store.state {
+                case .setting:
+                    SettingView(store: store)
+                case .add:
+                    AddView(store: store)
+                }
             }
         }
     }

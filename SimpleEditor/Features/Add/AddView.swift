@@ -1,13 +1,13 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct SettingView: View {
-    @Bindable var store: StoreOf<SettingFeature>
+struct AddView: View {
+    @Bindable var store: StoreOf<AddFeature>
     
     var body: some View {
         NavigationStack {
             
         }
-        .navigationTitle("Setting View")
+        .navigationTitle("Add View")
     }
 }

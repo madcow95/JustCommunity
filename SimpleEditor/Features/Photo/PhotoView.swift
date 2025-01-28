@@ -1,9 +1,29 @@
 import SwiftUI
 import PhotosUI
 import AVKit
+import ComposableArchitecture
+
+struct VideoPickerView: View {
+    @Bindable var store: StoreOf<PhotoFeature>
+    
+    var body: some View {
+        VideoPicker { url in
+            if let url {
+                store.send(.videoSelected(url))
+            }
+        }
+        .onDisappear {
+            store.send(.dismissGallery)
+        }
+    }
+}
 
 struct VideoPicker: UIViewControllerRepresentable {
-    @Binding var videoURL: URL? // 선택된 비디오의 URL
+    var onVideoSelected: (URL?) -> Void
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
     
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
@@ -17,9 +37,6 @@ struct VideoPicker: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
     
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
     
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
         let parent: VideoPicker
@@ -46,10 +63,10 @@ struct VideoPicker: UIViewControllerRepresentable {
                     do {
                         try FileManager.default.copyItem(at: tempURL, to: permanentURL)
                         DispatchQueue.main.async {
-                            self.parent.videoURL = permanentURL
+                            self.parent.onVideoSelected(permanentURL) // 콜백 호출
                         }
                     } catch {
-                        print("비디오 저장 실패: \(error)")
+                        self.parent.onVideoSelected(nil)
                     }
                 }
             }
