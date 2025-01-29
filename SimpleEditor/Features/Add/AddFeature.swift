@@ -1,10 +1,3 @@
-//
-//  AddFeature.swift
-//  SimpleEditor
-//
-//  Created by MadCow on 2025/1/28.
-//
-
 import ComposableArchitecture
 
 @Reducer
@@ -15,13 +8,13 @@ struct AddFeature {
     }
     
     enum Action {
-        case addAction
+        case popView
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .addAction:
+            case .popView:
                 return .none
             }
         }
