@@ -5,19 +5,33 @@ struct CustomTabView: View {
     @Bindable var store: StoreOf<TabFeature>
     
     var body: some View {
-        TabView(selection: $store.selectedTab.sending(\.pageMove)) {
-            Tab("Home", systemImage: "house.fill", value: TabOption.home) {
-                HomeView(store: store.scope(state: \.home, action: \.home))
+        ZStack(alignment: .bottom) {
+            Group {
+                switch store.selectedTab {
+                case .home:
+                    HomeView(store: store.scope(state: \.home, action: \.home))
+                case .add:
+                    // 어떤 옵션을 주지..?
+                    AddView(store: store.scope(state: \.add, action: \.add))
+                case .setting:
+                    SettingView(store: store.scope(state: \.setting, action: \.setting))
+                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            Tab("Add", systemImage: "plus", value: TabOption.add) {
-                AddView(store: store.scope(state: \.add, action: \.add))
-            }
-            
-            Tab("Profile", systemImage: "person.fill", value: TabOption.setting) {
-                SettingView(store: store.scope(state: \.setting, action: \.setting))
+            HStack {
+                ForEach(TabOption.allCases, id: \.self) { option in
+                    TabButton(tab: option, isSelected: store.selectedTab == option) {
+                        if option == .add {
+                            
+                        } else {
+                            store.send(.pageMove(option))
+                        }
+                    }
+                }
             }
         }
-        .tint(.primaryColor)
     }
 }
+
+

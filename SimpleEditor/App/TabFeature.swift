@@ -39,8 +39,24 @@ struct TabFeature {
     }
 }
 
-public enum TabOption: Hashable {
+public enum TabOption: Hashable, CaseIterable {
     case home
     case add
     case setting
+    
+    var title: String {
+        switch self {
+        case .home: return "Home"
+        case .add: return "Add"
+        case .setting: return "Profile"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .home: return "house"
+        case .add: return "plus"
+        case .setting: return "person"
+        }
+    }
 }
