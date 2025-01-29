@@ -4,16 +4,16 @@ import AVKit
 import ComposableArchitecture
 
 struct VideoPickerView: View {
-    @Bindable var store: StoreOf<PhotoFeature>
+//    @Bindable var store: StoreOf<PhotoFeature>
     
     var body: some View {
         VideoPicker { url in
             if let url {
-                store.send(.videoSelected(url))
+//                store.send(.videoSelected(url))
             }
         }
         .onDisappear {
-            store.send(.dismissGallery)
+//            store.send(.dismissGallery)
         }
     }
 }

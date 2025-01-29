@@ -30,9 +30,6 @@ struct HomeFeature {
                 return .none
             case let .path(action):
                 switch action {
-                case .element(id: _, action: .add(.popView)):
-                    state.path.append(.add(AddFeature.State()))
-                    return .none
                 default:
                     return .none
                 }
