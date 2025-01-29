@@ -10,10 +10,8 @@ struct VideoPickerView: View {
         VideoPicker { url in
             if let url {
 //                store.send(.videoSelected(url))
+                print(url.absoluteString)
             }
-        }
-        .onDisappear {
-//            store.send(.dismissGallery)
         }
     }
 }

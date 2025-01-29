@@ -23,10 +23,10 @@ struct HomeFeature {
         Reduce { state, action in
             switch action {
             case .moveToAdd:
-                state.path.append(.add(AddFeature.State()))
+                state.path.append(.add(.init()))
                 return .none
             case .moveToSetting:
-                state.path.append(.setting(SettingFeature.State()))
+                state.path.append(.setting(.init()))
                 return .none
             case let .path(action):
                 switch action {

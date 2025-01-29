@@ -13,11 +13,9 @@ struct SimpleEditorApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView(
-                store: Store(initialState: HomeFeature.State()) {
-                    HomeFeature()
-                }
-            )
+            CustomTabView(store: Store(initialState: TabFeature.State(), reducer: {
+                TabFeature()
+            }))
         }
     }
 }
