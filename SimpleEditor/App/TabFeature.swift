@@ -6,31 +6,34 @@ struct TabFeature {
     struct State {
         var selectedTab: TabOption = .home
         var home = HomeFeature.State()
-        var add = AddFeature.State()
-        var setting = SettingFeature.State()
+        var setting = ProfileFeature.State()
+        var isAddViewPresent: Bool = false
     }
     
     enum Action {
         case pageMove(TabOption)
         case home(HomeFeature.Action)
-        case add(AddFeature.Action)
-        case setting(SettingFeature.Action)
+        case setting(ProfileFeature.Action)
+        case setSheet(isPresented: Bool)
     }
     
     var body: some ReducerOf<Self> {
         Scope(state: \.home, action: \.home) {
             HomeFeature()
         }
-        Scope(state: \.add, action: \.add) {
-            AddFeature()
-        }
         Scope(state: \.setting, action: \.setting) {
-            SettingFeature()
+            ProfileFeature()
         }
         Reduce { state, action in
             switch action {
             case .pageMove(let tabOption):
                 state.selectedTab = tabOption
+                return .none
+            case .setSheet(isPresented: true):
+                state.isAddViewPresent = true
+                return .none
+            case .setSheet(isPresented: false):
+                state.isAddViewPresent = false
                 return .none
             default:
                 return .none

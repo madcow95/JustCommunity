@@ -11,10 +11,9 @@ struct CustomTabView: View {
                 case .home:
                     HomeView(store: store.scope(state: \.home, action: \.home))
                 case .add:
-                    // 어떤 옵션을 주지..?
-                    AddView(store: store.scope(state: \.add, action: \.add))
+                    EmptyView()
                 case .setting:
-                    SettingView(store: store.scope(state: \.setting, action: \.setting))
+                    ProfileView(store: store.scope(state: \.setting, action: \.setting))
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -23,13 +22,21 @@ struct CustomTabView: View {
                 ForEach(TabOption.allCases, id: \.self) { option in
                     TabButton(tab: option, isSelected: store.selectedTab == option) {
                         if option == .add {
-                            
+                            store.send(.setSheet(isPresented: true))
                         } else {
                             store.send(.pageMove(option))
                         }
                     }
                 }
             }
+            
+//            .clipShape(Capsule())
+//            .background(Color(UIColor.lightGray))
+        }
+        .sheet(isPresented: $store.isAddViewPresent.sending(\.setSheet)) {
+            AddView(store: Store(initialState: AddFeature.State(), reducer: {
+                AddFeature()
+            }))
         }
     }
 }

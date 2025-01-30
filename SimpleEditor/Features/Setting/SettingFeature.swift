@@ -1,3 +1,10 @@
+//
+//  SettingFeature.swift
+//  SimpleEditor
+//
+//  Created by MadCow on 2025/1/31.
+//
+
 import ComposableArchitecture
 
 @Reducer
@@ -8,13 +15,13 @@ struct SettingFeature {
     }
     
     enum Action {
-        case toRootView
+        case temp
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .toRootView:
+            case .temp:
                 return .none
             }
         }
