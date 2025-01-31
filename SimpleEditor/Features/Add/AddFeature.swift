@@ -10,16 +10,16 @@ struct AddFeature {
     }
     
     enum Action {
-        case setSheet(isPresented: Bool)
+        case setPhotoSheet(isPresented: Bool)
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .setSheet(isPresented: true):
+            case .setPhotoSheet(isPresented: true):
                 state.isPhotoSheetPresented = true
                 return .none
-            case .setSheet(isPresented: false):
+            case .setPhotoSheet(isPresented: false):
                 state.isPhotoSheetPresented = false
                 return .none
             }

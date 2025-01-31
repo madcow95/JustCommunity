@@ -15,6 +15,7 @@ struct TabFeature {
         case home(HomeFeature.Action)
         case setting(ProfileFeature.Action)
         case setSheet(isPresented: Bool)
+        case addViewDismiss
     }
     
     var body: some ReducerOf<Self> {
@@ -34,6 +35,10 @@ struct TabFeature {
                 return .none
             case .setSheet(isPresented: false):
                 state.isAddViewPresent = false
+                return .none
+            case .addViewDismiss:
+                state.isAddViewPresent = false
+                state.selectedTab = .home
                 return .none
             default:
                 return .none

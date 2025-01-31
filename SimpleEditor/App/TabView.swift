@@ -29,14 +29,13 @@ struct CustomTabView: View {
                     }
                 }
             }
-            
-//            .clipShape(Capsule())
-//            .background(Color(UIColor.lightGray))
         }
         .sheet(isPresented: $store.isAddViewPresent.sending(\.setSheet)) {
             AddView(store: Store(initialState: AddFeature.State(), reducer: {
                 AddFeature()
-            }))
+            }), dismiss: {
+                store.send(.addViewDismiss)
+            })
         }
     }
 }
