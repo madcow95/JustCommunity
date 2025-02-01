@@ -16,11 +16,8 @@ struct AddFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .setPhotoSheet(isPresented: true):
-                state.isPhotoSheetPresented = true
-                return .none
-            case .setPhotoSheet(isPresented: false):
-                state.isPhotoSheetPresented = false
+            case .setPhotoSheet(let isPresented):
+                state.isPhotoSheetPresented = isPresented
                 return .none
             }
         }

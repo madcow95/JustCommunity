@@ -9,7 +9,7 @@ struct HomeView: View {
             NavigationStack {
                 ScrollView {
                     ForEach(store.feeds, id: \.self) { feed in
-                        LazyVStack(spacing: 20) {
+                        LazyVStack(spacing: 0) {
                             HStack {
                                 HStack {
                                     Image(systemName: "sun.max")
@@ -32,6 +32,7 @@ struct HomeView: View {
                                 }
                             }
                             .frame(width: geometry.size.width, height: 40)
+                            .padding(.bottom, 10)
                             
                             Image("testImg")
                                 .resizable()
@@ -79,12 +80,8 @@ struct HomeView: View {
                                     }
                                 }
                             }
-//                                .padding(.horizontal, 10)
                             .frame(width: geometry.size.width, height: 40)
-                            .padding()
-//                            .padding(.bottom, 20)
-//                            .background(Color.gray.opacity(0.2))
-//                            .cornerRadius(20)
+//                            .padding()
                         }
                     }
                 }
