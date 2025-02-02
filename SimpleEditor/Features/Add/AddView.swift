@@ -1,5 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
+import PhotosUI
 
 struct AddView: View {
     @Bindable var store: StoreOf<AddFeature>
@@ -9,14 +10,16 @@ struct AddView: View {
         NavigationStack {
             VStack {
                 Text("Add View")
-                Button {
-                    store.send(.setPhotoSheet(isPresented: true))
-                } label: {
-                    Image(systemName: "photo.fill")
-                        .tint(.primaryColor)
+                PhotosPicker(selection: $store.selectedPictures.sending(\.setSelectedPictures), matching: .images) {
+                    Button {
+                        store.send(.setPhotoSheet(isPresented: true))
+                    } label: {
+                        Image(systemName: "photo.fill")
+                            .tint(.primaryColor)
+                    }
+                    .frame(width: 200, height: 200)
+                    .padding()
                 }
-                .frame(width: 200, height: 200)
-                .padding()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -28,9 +31,19 @@ struct AddView: View {
                     }
                 }
             }
-            .sheet(isPresented: $store.isPhotoSheetPresented.sending(\.setPhotoSheet)) {
-                VideoPickerView()
-            }
+//            .sheet(isPresented: $store.isPhotoSheetPresented.sending(\.setPhotoSheet)) {
+                
+//                PhotosPicker(selection: $store.selectedPictures.sending(\.setSelectedPictures), matching: .images) {
+//                    Button {
+//                        
+//                    } label: {
+//                        Image(systemName: "photo.fill")
+//                            .tint(.primaryColor)
+//                    }
+//                    .frame(width: 200, height: 200)
+//                    .padding()
+//                }
+//            }
         }
     }
 }
