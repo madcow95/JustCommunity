@@ -7,28 +7,33 @@ struct AddFeature {
     
     @ObservableState
     struct State {
-        var isPhotoSheetPresented: Bool = false
         var selectedPictures: [PhotosPickerItem] = []
         var selectedImages: [UIImage] = []
     }
     
     enum Action {
-        case setPhotoSheet(isPresented: Bool)
         case setSelectedPictures([PhotosPickerItem])
-        case loadSelectedImages
+        case loadSelectedImages([PhotosPickerItem])
+        case setPhotos([UIImage])
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .setPhotoSheet(let isPresented):
-                state.isPhotoSheetPresented = isPresented
-                return .none
             case .setSelectedPictures(let items):
-                state.selectedPictures = items
-                return .send(.loadSelectedImages)
-            case .loadSelectedImages:
-                print("선택된 이미지 숫자 >>> ",state.selectedPictures.count)
+                return .send(.loadSelectedImages(items))
+            case .loadSelectedImages(let pictures):
+                return .run { state in
+                    var images: [UIImage] = []
+                    for picture in pictures {
+                        if let data = try? await picture.loadTransferable(type: Data.self), let image = UIImage(data: data) {
+                            images.append(image)
+                        }
+                    }
+                    await state.callAsFunction(.setPhotos(images))
+                }
+            case .setPhotos(let images):
+                state.selectedImages = images
                 return .none
             }
         }
