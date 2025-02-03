@@ -20,8 +20,10 @@ struct AddFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+                // PhotosPicker를 통해 선택된 이미지들
             case .setSelectedPictures(let items):
                 return .send(.loadSelectedImages(items))
+                // 여기에서 PhotosPickerItem -> UIImage로 변경됨
             case .loadSelectedImages(let pictures):
                 return .run { state in
                     var images: [UIImage] = []

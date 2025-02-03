@@ -6,6 +6,7 @@ struct HomeFeature {
     
     @ObservableState
     struct State {
+        // 임시 데이터
         var feeds: [Feed] = (1...20).map { _ in
             Feed(createUser: users.randomElement()!, likeCount: (1...100).randomElement()!, comments: [], images: [])
         }

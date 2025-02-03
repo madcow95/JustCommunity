@@ -21,6 +21,7 @@ struct ProfileFeature {
         Reduce { state, action in
             switch action {
             case .moveToSetting:
+                // MARK: 설정 화면으로 이동
                 state.path.append(.setting(.init()))
                 return .none
             case let .path(action):

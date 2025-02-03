@@ -1,6 +1,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+// MARK: 탭 버튼마다 다르게 동작하게 하기 위한 CustomTabView
 struct CustomTabView: View {
     @Bindable var store: StoreOf<TabFeature>
     
@@ -21,6 +22,7 @@ struct CustomTabView: View {
             HStack {
                 ForEach(TabOption.allCases, id: \.self) { option in
                     TabButton(tab: option, isSelected: store.selectedTab == option) {
+                        // MARK: Add 버튼을 눌렀을 때는 sheet가 표시
                         if option == .add {
                             store.send(.setSheet(isPresented: true))
                         } else {
