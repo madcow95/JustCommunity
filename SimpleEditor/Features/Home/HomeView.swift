@@ -6,6 +6,7 @@ struct HomeView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let width = geometry.size.width - 40
             NavigationStack {
                 ScrollView {
                     ForEach(store.feeds, id: \.self) { feed in
@@ -31,13 +32,19 @@ struct HomeView: View {
                                         .tint(.primaryColor)
                                 }
                             }
-                            .frame(width: geometry.size.width, height: 40)
+                            .frame(width: width, height: 40)
                             .padding(.bottom, 10)
                             
-                            Image("testImg")
-                                .resizable()
-                                .frame(width: geometry.size.width, height: 500)
-                                .scaledToFit()
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach((0..<5), id: \.self) { _ in
+                                        Image("testImg")
+                                            .resizable()
+                                            .frame(width: width, height: 500)
+                                            .scaledToFit()
+                                    }
+                                }
+                            }
                             
                             HStack {
                                 HStack {
@@ -80,9 +87,11 @@ struct HomeView: View {
                                     }
                                 }
                             }
-                            .frame(width: geometry.size.width, height: 40)
-//                            .padding()
+                            .frame(width: width, height: 40)
                         }
+                        .padding()
+                        .background(Color(UIColor.lightGray).opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
                     }
                 }
                 .padding(.bottom, 50)

@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 import ComposableArchitecture
 
 @Reducer
@@ -10,6 +10,9 @@ struct HomeFeature {
         var feeds: [Feed] = (1...20).map { _ in
             Feed(createUser: users.randomElement()!, likeCount: (1...100).randomElement()!, comments: [], images: [])
         }
+        var images: [Image] = [
+            Image("testImg"), Image("testImg"), Image("testImg"), Image("testImg"), Image("testImg")
+        ]
     }
     
     enum Action {
